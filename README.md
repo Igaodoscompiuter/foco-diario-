@@ -18,9 +18,9 @@ Siga os passos abaixo para rodar o projeto localmente na sua máquina.
 **Instalação:**
 
 1.  **Clone o repositório:**
+    Obtenha a URL (HTTPS ou SSH) clicando no botão "Code" no topo desta página e execute o comando abaixo em seu terminal.
     ```bash
-    # Substitua pela URL correta do seu repositório
-    git clone https://github.com/seu-usuario/focusfrog.git
+    git clone <URL_DO_REPOSITÓRIO>
     ```
 
 2.  **Entre na pasta do projeto:**
@@ -38,7 +38,7 @@ Siga os passos abaixo para rodar o projeto localmente na sua máquina.
     npm run dev
     ```
 
-Após esses passos, o aplicativo estará rodando em `http://localhost:5173` (ou em alguma outra porta, caso a 5173 esteja ocupada). 
+Após esses passos, o aplicativo estará rodando em `http://localhost:5173`.
 
 ## 🛠️ Stack de Tecnologia
 
@@ -55,5 +55,5 @@ O projeto segue uma filosofia de organização clara para garantir escalabilidad
 *   **/src/screens**: As telas principais do aplicativo (os "Cômodos").
 *   **/src/context**: Gerenciadores de estado global (os "Cérebros").
 *   **/src/hooks**: Hooks customizados para lógica reutilizável (as "Caixas de Ferramentas").
-*   **/src/global-components.css**: Estilos globais e de base (a "Fundação").
+*   **/src/global-styles.css**: Estilos globais e de base (a "Fundação").
 *   **`[Componente].module.css`**: Estilos específicos para um componente ou tela (a "Decoração").
