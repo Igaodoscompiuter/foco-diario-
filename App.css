@@ -136,6 +136,15 @@ a {
    GLOBAL COMPONENT STYLES
 ================================================================= */
 
+/* --- Global Card System --- */
+.card {
+    background-color: var(--surface-color);
+    padding: var(--sp-lg);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--border-color);
+    margin-bottom: var(--sp-lg);
+}
+
 /* --- Global Button System --- */
 .btn {
     display: inline-flex;
@@ -178,14 +187,32 @@ a {
     border-radius: var(--border-radius-md);
 }
 
+/* FIX: Refined .btn-icon for a more polished, circular appearance. */
 .btn-icon {
-    padding: var(--sp-sm);
-    border-radius: 50%;
-    line-height: 0;
+    width: 40px;
+    height: 40px;
+    padding: 0; /* Remove padding to rely on width/height for sizing */
+    border-radius: 50%; /* Ensure perfect circularity */
+    /* Flex properties from .btn will center the icon */
 }
 
 .btn-icon.btn-small {
-    padding: var(--sp-xs);
     width: 32px;
     height: 32px;
+    padding: 0; /* Consistent with the base .btn-icon */
 }
+
+/* =================================================================
+   GLOBAL SCROLLBAR HIDING
+================================================================= */
+
+/* Oculta a barra de rolagem mas mantém a funcionalidade */
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* Para Firefox */
+* {
+  scrollbar-width: none;
+}
+

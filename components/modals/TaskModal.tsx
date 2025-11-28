@@ -5,7 +5,7 @@ import { Icon } from '../Icon';
 import { icons } from '../Icons';
 import type { Task, Subtask, Quadrant, TimeOfDay, EnergyLevel } from '../../types';
 import { quadrants } from '../../constants';
-import styles from './TaskModal.module.css'; // Importando o novo CSS Module
+import styles from './TaskModal.module.css'; // Módulo de estilo para componentes internos
 
 // --- Helper Functions e Constantes ---
 
@@ -33,7 +33,6 @@ const timeOfDayOptions: { id: TimeOfDay | '', label: string }[] = [
     { id: '', label: 'Nenhum' },
 ];
 
-
 // --- Componente Principal ---
 
 export const TaskModal: React.FC<{ taskToEdit: Partial<Task> | null; onClose: () => void; }> = ({ taskToEdit, onClose }) => {
@@ -41,14 +40,13 @@ export const TaskModal: React.FC<{ taskToEdit: Partial<Task> | null; onClose: ()
     const [task, setTask] = useState<Partial<Task>>({});
     const [newSubtask, setNewSubtask] = useState('');
     const [isDetailedView, setIsDetailedView] = useState(false);
-    const [isGenerating, setIsGenerating] = useState(false);
 
     const isQuickTask = task.pomodoroEstimate === 0;
 
     useEffect(() => {
         const initialState = getInitialTaskState(taskToEdit);
         setTask(initialState);
-        setIsDetailedView(!!initialState.id || !!taskToEdit?.isDetailed);
+        setIsDetailedView(!!initialState.id || !!initialState.isDetailed);
     }, [taskToEdit]);
 
     const handleChange = (field: keyof Task, value: any) => setTask(prev => ({ ...prev, [field]: value }));
@@ -57,7 +55,6 @@ export const TaskModal: React.FC<{ taskToEdit: Partial<Task> | null; onClose: ()
         if (type === 'quick') handleChange('customDuration', undefined);
     };
 
-    // --- Subtasks Logic ---
     const handleAddSubtask = () => {
         if (newSubtask.trim()) {
             const subtask: Subtask = { id: `sub-${Date.now()}`, text: newSubtask, completed: false };
@@ -67,7 +64,6 @@ export const TaskModal: React.FC<{ taskToEdit: Partial<Task> | null; onClose: ()
     };
     const handleRemoveSubtask = (id: string) => handleChange('subtasks', task.subtasks?.filter(st => st.id !== id));
 
-    // --- Form Submission ---
     const handleSubmit = () => {
         if (!task.title?.trim()) return alert('O título da tarefa é obrigatório.');
         const { isDetailed, ...taskToSave } = task;
@@ -86,14 +82,14 @@ export const TaskModal: React.FC<{ taskToEdit: Partial<Task> | null; onClose: ()
     if (!taskToEdit) return null;
 
     return (
-        <div className={styles.modalOverlay} onClick={onClose}>
-            <div className={styles.modal} onClick={e => e.stopPropagation()}>
-                <header className={styles.modalHeader}>
-                    <h3>{task.id ? 'Editar Tarefa' : 'Nova Tarefa'}</h3>
-                    <button onClick={onClose} className="control-button icon-only tertiary"><Icon path={icons.close} /></button>
+        <div className="g-modal-overlay" onClick={onClose}>
+            <div className="g-modal" onClick={e => e.stopPropagation()}>
+                <header className="g-modal-header">
+                    <h3><Icon path={icons.edit3} /> {task.id ? 'Editar Tarefa' : 'Nova Tarefa'}</h3>
+                    <button onClick={onClose} className="btn btn-secondary btn-icon"><Icon path={icons.close} /></button>
                 </header>
 
-                <main className={styles.modalBody}>
+                <main className="g-modal-body">
                     <input
                         type="text"
                         className={styles.titleInput}
@@ -172,26 +168,26 @@ export const TaskModal: React.FC<{ taskToEdit: Partial<Task> | null; onClose: ()
                                         <li key={sub.id} className={styles.subtaskItem}>
                                             <input type="checkbox" checked={sub.completed} readOnly className="task-complete-button"/>
                                             <input type="text" value={sub.text} onChange={e => handleChange('subtasks', task.subtasks?.map(s => s.id === sub.id ? {...s, text: e.target.value} : s))} className={styles.subtaskInput}/>
-                                            <button onClick={() => handleRemoveSubtask(sub.id)} className="control-button icon-only tertiary small"><Icon path={icons.trash}/></button>
+                                            <button onClick={() => handleRemoveSubtask(sub.id)} className="btn btn-tertiary btn-icon btn-sm"><Icon path={icons.trash}/></button>
                                         </li>
                                     ))}
                                 </ul>
                                 <div className={styles.subtaskAddGroup}>
                                     <input type="text" placeholder="Adicionar subtarefa..." value={newSubtask} onChange={e => setNewSubtask(e.target.value)} onKeyPress={e => e.key === 'Enter' && handleAddSubtask()} />
-                                    <button onClick={handleAddSubtask} className="control-button icon-only primary small"><Icon path={icons.plus}/></button>
+                                    <button onClick={handleAddSubtask} className="btn btn-primary btn-icon btn-sm"><Icon path={icons.plus}/></button>
                                 </div>
                             </div>
                         </div>
                     )}
                 </main>
 
-                <footer className={styles.modalFooter}>
-                    <div className={styles.footerActions}>
-                        {task.id && <button className="control-button tertiary danger" onClick={handleDelete}><Icon path={icons.trash} /> Excluir</button>}
-                        {task.id && <button className="control-button tertiary" onClick={() => handleCreateTemplateFromTask(task as Task)}><Icon path={icons.bookOpen} /> Salvar como Modelo</button>}
+                <footer className="g-modal-footer">
+                    <div style={{ marginRight: 'auto' }}> 
+                        {task.id && <button className="btn btn-tertiary btn-danger" onClick={handleDelete}><Icon path={icons.trash} /> Excluir</button>}
+                        {task.id && <button className="btn btn-tertiary" onClick={() => handleCreateTemplateFromTask(task as Task)}><Icon path={icons.bookOpen} /> Salvar como Modelo</button>}
                     </div>
-                    <div className={styles.footerActions}>
-                        <button className="control-button primary" onClick={handleSubmit}>Salvar</button>
+                    <div>
+                        <button className="btn btn-primary" onClick={handleSubmit}><Icon path={icons.check} /> Salvar</button>
                     </div>
                 </footer>
             </div>
@@ -199,7 +195,7 @@ export const TaskModal: React.FC<{ taskToEdit: Partial<Task> | null; onClose: ()
     );
 };
 
-// --- Sub-componente para a Matriz ---
+// --- Sub-componente para a Matriz (continua o mesmo) ---
 
 const MatrixSelector: React.FC<{ task: Partial<Task>, setTask: React.Dispatch<React.SetStateAction<Partial<Task>>> }> = ({ task, setTask }) => {
     const [urgency, setUrgency] = useState<'urgent' | 'not-urgent' | null>(null);

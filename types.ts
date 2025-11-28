@@ -21,6 +21,7 @@ export interface Task {
     quadrant: Quadrant;
     subtasks?: Subtask[];
     dueDate?: string; // YYYY-MM-DD
+    completedAt?: string; // ISO Date String
     timeOfDay?: TimeOfDay;
     tagId?: number | null;
     startTime?: string; // HH:MM

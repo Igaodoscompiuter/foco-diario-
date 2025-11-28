@@ -3,7 +3,7 @@ import type { Task } from '../../types';
 import styles from './MorningReviewModal.module.css';
 
 interface MorningReviewModalProps {
-  tasks?: Task[]; // Tornando a prop opcional para refletir a realidade
+  tasks?: Task[];
   selectedTask: string | null; 
   onSelectTask: (taskId: string) => void; 
   onConfirm: () => void; 
@@ -11,21 +11,22 @@ interface MorningReviewModalProps {
 }
 
 export const MorningReviewModal: React.FC<MorningReviewModalProps> = ({ 
-  tasks = [], // FIX: Se tasks for undefined, use um array vazio como padrão.
+  tasks = [],
   selectedTask,
   onSelectTask,
   onConfirm,
   onClose
 }) => {
   return (
-    <div className="g-modal-overlay"> 
-      <div className="g-modal"> 
-        <div className={styles.modalHeader}>
+    <div className="g-modal-overlay" onClick={onClose}> 
+      <div className="g-modal" onClick={(e) => e.stopPropagation()}> 
+        
+        <header className={`g-modal-header ${styles.centeredHeader}`}>
           <h3>🐸 Qual sapo você vai engolir hoje?</h3>
-          <p>Escolha a tarefa mais importante para focar primeiro.</p>
-        </div>
+          <p className={styles.subtitle}>Escolha a tarefa mais importante para focar primeiro.</p>
+        </header>
 
-        <div className={styles.modalBody}>
+        <main className="g-modal-body">
           {tasks.length > 0 ? (
             <ul className={styles.taskList}>
               {tasks.map(task => (
@@ -44,9 +45,9 @@ export const MorningReviewModal: React.FC<MorningReviewModalProps> = ({
               <p>Nenhuma tarefa na sua lista! Adicione algumas para começar.</p>
             </div>
           )}
-        </div>
+        </main>
 
-        <div className={styles.modalFooter}>
+        <footer className={"g-modal-footer g-modal-footer--space-between"}>
           <button className={`${styles.controlButton} ${styles.secondary}`} onClick={onClose}> 
             Decidir depois
           </button>
@@ -57,7 +58,7 @@ export const MorningReviewModal: React.FC<MorningReviewModalProps> = ({
           >
             Engolir este sapo
           </button>
-        </div>
+        </footer>
       </div>
     </div>
   );

@@ -1,6 +1,12 @@
 
 /* screens/StatsScreen.module.css */
 
+.statsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-lg);
+}
+
 .statsHeader {
     margin-bottom: var(--sp-lg);
 }
@@ -16,8 +22,8 @@
     color: white;
     border-radius: var(--border-radius-xl);
     padding: var(--sp-lg) var(--sp-xl);
-    margin-bottom: var(--sp-lg);
     box-shadow: var(--shadow-lg);
+    margin-bottom: var(--sp-lg);
 }
 
 .streakContent {
@@ -87,49 +93,55 @@
     line-height: 1;
 }
 
-/* --- Heatmap de Consistência --- */
+/* --- Card de Consistência --- */
+.consistencyCard {
+  /* Esta classe agora pode ser usada para aplicar estilos específicos ao card de consistência, se necessário. */
+  /* Por exemplo, para sobrescrever o padding padrão: */
+  /* padding: var(--sp-xl); */
+}
+
 .sectionTitle {
     display: flex;
     align-items: center;
     gap: var(--sp-sm);
+    font-size: 1.1rem;
+    font-weight: 600;
     margin-bottom: var(--sp-md);
 }
 
 .heatmapWrapper {
-    overflow-x: auto;
-    padding-bottom: var(--sp-sm);
+    overflow-x: auto; /* Permite scroll horizontal se a tela for muito pequena */
+    padding-bottom: var(--sp-sm); /* Espaço para a barra de scroll não colar nos elementos */
+    margin: 0 calc(var(--sp-lg) * -1); /* Compensa o padding do card para o heatmap ir de ponta a ponta */
+    padding-left: var(--sp-lg);
+    padding-right: var(--sp-lg);
 }
 
 .heatmapGrid {
     display: grid;
-    grid-template-columns: repeat(28, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 4px;
-    width: max-content; /* Permite o scroll horizontal */
+    grid-template-columns: repeat(18, 1fr); /* Ajuste conforme necessário */
+    grid-auto-rows: 1fr;
+    gap: 3px;
+    width: 100%;
+    aspect-ratio: 18 / 5; /* Proporção do grid */
 }
 
 .heatmapCell {
-    width: 16px;
-    height: 16px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
     background-color: var(--surface-secondary-color);
-    border-radius: var(--border-radius-sm);
-    transition: background-color 0.3s ease;
+    border-radius: 2px;
 }
 
-.heatmapCell:hover {
-    border: 1px solid var(--text-color);
-}
-
-.level-0 { background-color: var(--surface-secondary-color); }
-.level-1 { background-color: #65a06d; } /* Exemplo de cores de heatmap */
-.level-2 { background-color: #4a8c54; }
-.level-3 { background-color: #2e783a; }
+.heatmapCell.level-1 { background-color: var(--primary-color-translucent-10); }
+.heatmapCell.level-2 { background-color: var(--primary-color-translucent-30); }
+.heatmapCell.level-3 { background-color: var(--primary-color); }
 
 .footnote {
     font-size: 0.8rem;
     color: var(--text-muted-color);
-    margin-top: var(--sp-sm);
     text-align: right;
+    margin-top: var(--sp-sm);
 }
 
 /* --- Rodapé --- */

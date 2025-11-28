@@ -1,11 +1,13 @@
 
 
-
 import React from 'react';
 import { useTasks } from '../../context/TasksContext';
 import type { TaskFilters, EnergyLevel, Tag } from '../../types';
 import { Icon } from '../Icon';
 import { icons } from '../Icons';
+
+// Importando os estilos modulares para manter o escopo de algumas classes
+import styles from './FilterPanel.module.css';
 
 interface FilterPanelProps {
     isOpen: boolean;
@@ -57,54 +59,55 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({ isOpen, onClose, filte
         onFilterChange({ tags: [], status: [], energy: [] });
     };
 
+    // Não renderiza nada se não estiver aberto
+    if (!isOpen) {
+        return null;
+    }
+
     return (
-        <>
-            <div className={`filter-panel-overlay ${isOpen ? 'open' : ''}`} onClick={onClose} />
-            <aside className={`filter-panel ${isOpen ? 'open' : ''}`}>
-                <div className="filter-panel-header">
+        <div className="g-modal-overlay" onClick={onClose}>
+            <div className="g-modal" onClick={(e) => e.stopPropagation()}>
+                <div className="g-modal-header">
                     <h3><Icon path={icons.sliders} /> Filtros</h3>
-                     <button onClick={onClose} className="icon-button close-button" aria-label="Fechar filtros">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                            <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
+                    <button onClick={onClose} className="btn btn-secondary btn-icon" aria-label="Fechar filtros">
+                        <Icon path={icons.close} />
                     </button>
                 </div>
-                <div className="filter-panel-body">
-                    <div className="filter-section">
+                <div className={styles.panelBody}>
+                    <div className={styles.filterSection}>
                         <h4>Status</h4>
-                        <div className="filter-options">
+                        <div className={styles.filterOptions}>
                             {statusOptions.map(option => (
-                                <label key={option.id} className="filter-checkbox">
+                                <label key={option.id} className={styles.filterCheckbox}>
                                     <input type="checkbox" checked={filters.status.includes(option.id)} onChange={() => handleToggleFilter('status', option.id)} />
-                                    <span className="checkbox-visual"><Icon path={icons.check} /></span>
+                                    <span className={styles.checkboxVisual}><Icon path={icons.check} /></span>
                                     <span>{option.label}</span>
                                 </label>
                             ))}
                         </div>
                     </div>
 
-                     <div className="filter-section">
+                     <div className={styles.filterSection}>
                         <h4>Tags</h4>
-                        <div className="filter-options">
+                        <div className={styles.filterOptions}>
                              {tags.map(tag => (
-                                <label key={tag.id} className="filter-checkbox">
+                                <label key={tag.id} className={styles.filterCheckbox}>
                                     <input type="checkbox" checked={filters.tags.includes(tag.id)} onChange={() => handleToggleFilter('tags', tag.id)} />
-                                    <span className="checkbox-visual"><Icon path={icons.check} /></span>
-                                    <span className="tag-color-dot" style={{backgroundColor: tag.color}}></span>
+                                    <span className={styles.checkboxVisual}><Icon path={icons.check} /></span>
+                                    <span className={styles.tagColorDot} style={{backgroundColor: tag.color}}></span>
                                     <span>{tag.name}</span>
                                 </label>
                             ))}
                         </div>
                     </div>
 
-                     <div className="filter-section">
+                     <div className={styles.filterSection}>
                         <h4>Energia</h4>
-                        <div className="filter-options">
+                        <div className={styles.filterOptions}>
                             {energyOptions.map(option => (
-                                <label key={option.id} className="filter-checkbox">
+                                <label key={option.id} className={styles.filterCheckbox}>
                                     <input type="checkbox" checked={filters.energy.includes(option.id)} onChange={() => handleToggleFilter('energy', option.id)} />
-                                    <span className="checkbox-visual"><Icon path={icons.check} /></span>
+                                    <span className={styles.checkboxVisual}><Icon path={icons.check} /></span>
                                     <span>{option.label}</span>
                                 </label>
                             ))}
@@ -112,11 +115,11 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({ isOpen, onClose, filte
                     </div>
 
                 </div>
-                 <div className="filter-panel-footer">
-                    <button className="control-button tertiary" onClick={handleClearFilters}>Limpar Filtros</button>
-                    <button className="control-button" onClick={onClose}>Aplicar</button>
+                 <div className={styles.panelFooter}>
+                    <button className="btn btn-secondary" onClick={handleClearFilters}>Limpar</button>
+                    <button className="btn btn-primary" onClick={onClose}>Aplicar</button>
                 </div>
-            </aside>
-        </>
+            </div>
+        </div>
     );
 };

@@ -49,7 +49,7 @@ export const StatsScreen: React.FC = () => {
 
     return {
       tasksCompletedCount: tasksCompleted.length,
-      focusHours: Math.floor(focusHours),
+      focusHours: Math.round(focusHours * 10) / 10,
       pointsEarned: pontosFoco,
       streakDays: streakDays,
     };
@@ -88,58 +88,60 @@ export const StatsScreen: React.FC = () => {
             <h2>Seu Progresso</h2>
         </div>
       </div>
-
-      <div className={styles.streakHeroCard}>
-        <div className={styles.streakContent}>
-            <div className={`${styles.streakIconLarge} ${stats.streakDays > 0 ? styles.burning : ''}`}>
-                <Icon path={icons.flame} />
-            </div>
-            <div className={styles.streakInfo}>
-                <span className={styles.streakCount}>{stats.streakDays}</span>
-                <span className={styles.streakLabel}>Dias seguidos de foco!</span>
-            </div>
-        </div>
-      </div>
-
-      <div className={styles.keyMetricsGrid}>
-        <div className={`card ${styles.metricCard}`}>
-          <div className={styles.metricHeader}><Icon path={icons.checkSquare} /><span>Tarefas</span></div>
-          <div className={styles.value}>{stats.tasksCompletedCount}</div>
-        </div>
-        <div className={`card ${styles.metricCard}`}>
-          <div className={styles.metricHeader}><Icon path={icons.timer} /><span>Horas Focadas</span></div>
-          <div className={styles.value}>{stats.focusHours}h</div>
-        </div>
-         <div className={`card ${styles.metricCard}`}>
-           <div className={styles.metricHeader}><Icon path={icons.trophy} /><span>Pontos</span></div>
-          <div className={styles.value}>{stats.pointsEarned}</div>
-        </div>
-      </div>
       
-      <div className="card">
-          <h4 className={styles.sectionTitle}>
-              <Icon path={icons.calendar} /> Consistência
-          </h4>
-          <div className={styles.heatmapWrapper}>
-            <div className={styles.heatmapGrid}>
-                {heatmapData.map((day) => (
-                    <div 
-                        key={day.date} 
-                        className={`${styles.heatmapCell} ${styles['level-' + day.level]}`}
-                        title={`${day.date}: ${day.count} tarefas`}
-                    ></div>
-                ))}
+      <div className={styles.statsContainer}>
+          <div className={styles.streakHeroCard}>
+            <div className={styles.streakContent}>
+                <div className={`${styles.streakIconLarge} ${stats.streakDays > 0 ? styles.burning : ''}`}>
+                    <Icon path={icons.flame} />
+                </div>
+                <div className={styles.streakInfo}>
+                    <span className={styles.streakCount}>{stats.streakDays}</span>
+                    <span className={styles.streakLabel}>Dias seguidos de foco!</span>
+                </div>
             </div>
           </div>
-          <p className={styles.footnote}>
-              Últimos 3 meses
-          </p>
-      </div>
 
-      <div className={styles.statsFooterActions}>
-         <button className="btn btn-secondary" onClick={() => handleNavigate('rewards')}>
-            <Icon path={icons.trophy} /> Ir para Loja de Recompensas
-         </button>
+          <div className={styles.keyMetricsGrid}>
+            <div className={`card ${styles.metricCard}`}>
+              <div className={styles.metricHeader}><Icon path={icons.checkSquare} /><span>Tarefas</span></div>
+              <div className={styles.value}>{stats.tasksCompletedCount}</div>
+            </div>
+            <div className={`card ${styles.metricCard}`}>
+              <div className={styles.metricHeader}><Icon path={icons.timer} /><span>Horas Focadas</span></div>
+              <div className={styles.value}>{stats.focusHours}h</div>
+            </div>
+             <div className={`card ${styles.metricCard}`}>
+               <div className={styles.metricHeader}><Icon path={icons.trophy} /><span>Pontos</span></div>
+              <div className={styles.value}>{stats.pointsEarned}</div>
+            </div>
+          </div>
+          
+          <div className={`card ${styles.consistencyCard}`}>
+              <h4 className={styles.sectionTitle}>
+                  <Icon path={icons.calendar} /> Consistência
+              </h4>
+              <div className={styles.heatmapWrapper}>
+                <div className={styles.heatmapGrid}>
+                    {heatmapData.map((day) => (
+                        <div 
+                            key={day.date} 
+                            className={`${styles.heatmapCell} ${styles['level-' + day.level]}`}
+                            title={`${day.date}: ${day.count} tarefas`}
+                        ></div>
+                    ))}
+                </div>
+              </div>
+              <p className={styles.footnote}>
+                  Últimos 3 meses
+              </p>
+          </div>
+
+          <div className={styles.statsFooterActions}>
+             <button className="btn btn-secondary" onClick={() => handleNavigate('rewards')}>
+                <Icon path={icons.trophy} /> Ir para Loja de Recompensas
+             </button>
+          </div>
       </div>
     </main>
   );

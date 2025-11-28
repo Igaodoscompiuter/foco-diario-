@@ -1,8 +1,7 @@
 /* global-components.css */
 
 /* =================================================================
-   GLOBAL MODAL STYLES
-   Use estas classes como a base para todas as modais da aplicação.
+   GLOBAL MODAL SYSTEM (ADAPTIVE & POLISHED)
 ================================================================= */
 
 .g-modal-overlay {
@@ -14,28 +13,63 @@
     justify-content: center;
     z-index: 2000;
     backdrop-filter: blur(5px);
-    padding: 1rem;
+    padding: var(--sp-lg);
     animation: g-modal-fadeIn 0.3s ease;
 }
 
 .g-modal {
     background-color: var(--surface-color);
-    border-radius: var(--border-radius-xl); /* <<< A REGRA DE OURO! */
-    padding: var(--sp-lg);
-    width: 100%;
-    max-width: 450px;
+    border-radius: var(--border-radius-xl);
     border: 1px solid var(--border-color);
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
     animation: g-modal-slideUp 0.3s ease;
+    padding: var(--sp-lg);
+    display: flex;
+    flex-direction: column;
+    max-height: 85vh;
+    width: auto; 
+    min-width: 320px;
+    max-width: 90vw;
 }
 
-/* Animações Globais para Modais */
-@keyframes g-modal-fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.g-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: var(--sp-md);
+    margin-bottom: var(--sp-lg);
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+    gap: 1rem;
 }
 
-@keyframes g-modal-slideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+.g-modal-header h3 {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-sm);
 }
+
+.g-modal-body {
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-grow: 1;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* As regras de estilo de barra de rolagem foram movidas para App.css */
+
+.g-modal-footer {
+    padding-top: var(--sp-md);
+    margin-top: var(--sp-lg);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    gap: var(--sp-sm);
+    flex-shrink: 0;
+}
+
+.g-modal-footer--align-end { justify-content: flex-end; }
+.g-modal-footer--space-between { justify-content: space-between; }
+
+@keyframes g-modal-fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes g-modal-slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }

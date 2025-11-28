@@ -10,9 +10,8 @@ import type { Task, Quadrant, TaskFilters } from '../types';
 import { quadrants } from '../constants';
 import { FilterPanel } from '../components/tasks/FilterPanel';
 import { TaskLibraryModal } from '../components/modals/TaskLibraryModal';
-import styles from './TasksScreen.module.css'; // Usaremos styles para as classes específicas
+import styles from './TasksScreen.module.css';
 
-// QuadrantColumn permanece funcionalmente o mesmo, mas o JSX interno será padronizado
 const QuadrantColumn: React.FC<any> = ({ quadrant, tasks, onEdit, onSubtaskClick, onToggleSubtask, draggingTask, onDragStart, onDragEnd, onDrop, isMaximized, onToggleMaximize }) => {
   const [isColumnDragOver, setIsColumnDragOver] = useState(false);
   const [dropIndicatorIndex, setDropIndicatorIndex] = useState<number | null>(null);
@@ -46,9 +45,10 @@ const QuadrantColumn: React.FC<any> = ({ quadrant, tasks, onEdit, onSubtaskClick
     setIsColumnDragOver(false);
   }
 
+  // FIX: Adicionada a classe global .card para padronizar a aparência das colunas.
   return (
     <div
-      className={`${styles.quadrantColumn} ${styles['quadrant-' + quadrant]} ${isMaximized ? styles.maximized : ''}`}
+      className={`card ${styles.quadrantColumn} ${styles['quadrant-' + quadrant]} ${isMaximized ? styles.maximized : ''}`}
       onDragOver={(e) => { e.preventDefault(); setIsColumnDragOver(true); }}
       onDragLeave={handleDragLeave}
       onDrop={handleColumnDrop}
@@ -114,7 +114,6 @@ export const TasksScreen: React.FC = () => {
     const [draggingTask, setDraggingTask] = useState<Task | null>(null);
     const [maximizedQuadrant, setMaximizedQuadrant] = useState<Quadrant | null>(null);
 
-    // ... (lógica de filtro e memoização continua a mesma) ...
      const filteredTasks = useMemo(() => {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
@@ -173,12 +172,11 @@ export const TasksScreen: React.FC = () => {
     };
     
     return (
-        <main> {/* Removido .tasks-screen */}
+        <main>
             {editingTask && <TaskModal taskToEdit={editingTask} onClose={handleCloseTaskModal} />}
             {isLibraryOpen && <TaskLibraryModal routines={routines} onAddRoutine={handleAddRoutine} onAddTemplates={handleAddTemplates} onClose={() => setIsLibraryOpen(false)} />}
             <FilterPanel isOpen={isFilterPanelOpen} onClose={() => setIsFilterPanelOpen(false)} filters={filters} onFilterChange={setFilters} />
 
-            {/* Adicionando a classe screen-content para consistência */}
             <div className="screen-content">
                 <div className={styles.tasksHeader}>
                     <div className={styles.tasksTitle}>

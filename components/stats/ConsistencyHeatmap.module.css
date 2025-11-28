@@ -1,0 +1,45 @@
+/* components/stats/ConsistencyHeatmap.module.css */
+
+.sectionTitle {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    margin-bottom: var(--sp-md);
+}
+
+.heatmapWrapper {
+    overflow-x: auto;
+    padding-bottom: var(--sp-sm);
+}
+
+.heatmapGrid {
+    display: grid;
+    grid-template-columns: repeat(28, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 4px;
+    width: max-content; /* Permite o scroll horizontal */
+}
+
+.heatmapCell {
+    width: 16px;
+    height: 16px;
+    background-color: var(--surface-secondary-color);
+    border-radius: var(--border-radius-sm);
+    transition: background-color 0.3s ease;
+}
+
+.heatmapCell:hover {
+    border: 1px solid var(--text-color);
+}
+
+.level-0 { background-color: var(--surface-secondary-color); }
+.level-1 { background-color: #65a06d; } 
+.level-2 { background-color: #4a8c54; }
+.level-3 { background-color: #2e783a; }
+
+.footnote {
+    font-size: 0.8rem;
+    color: var(--text-muted-color);
+    margin-top: var(--sp-sm);
+    text-align: right;
+}

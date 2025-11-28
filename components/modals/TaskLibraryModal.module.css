@@ -1,0 +1,185 @@
+/* Estilos para a Biblioteca de Tarefas */
+
+.taskLibraryModal {
+    max-width: 600px;
+}
+
+.modalHeader {
+    position: relative;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.modalHeader h3 {
+    margin-bottom: 0.25rem;
+}
+.modalHeader p {
+    margin: 0;
+    color: var(--color-text-secondary);
+}
+
+.closeButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+.libraryTabs {
+    display: flex;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 1.5rem;
+}
+
+.libraryTabs button {
+    flex: 1;
+    padding: 1rem;
+    background-color: transparent;
+    border: none;
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px; /* Alinhar com a borda inferior do container */
+}
+
+.libraryTabs button:hover {
+    color: var(--color-text-primary);
+}
+
+.libraryTabs button.active {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+}
+
+.modalBody {
+    max-height: 60vh;
+    overflow-y: auto;
+    padding: 0.25rem;
+    margin: 0 -0.25rem;
+}
+
+.librarySection {
+    padding: 0.5rem;
+}
+
+.routinesList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.routineCard {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+    align-items: center;
+}
+
+.routineCard h5 {
+    margin: 0;
+}
+.routineCard p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    flex-grow: 1;
+}
+
+.routineCardHeader {
+    font-size: 1.5rem;
+}
+
+/* Estilos do Acordeão */
+.taskLibraryAccordion {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.accordionItem {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-medium);
+}
+
+.accordionHeader {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+}
+.accordionHeader svg {
+    transition: transform 0.2s ease-in-out;
+}
+.accordionItem.open .accordionHeader svg {
+    transform: rotate(180deg);
+}
+
+
+.accordionContent {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+    padding: 0 1rem;
+}
+.accordionItem.open .accordionContent {
+    max-height: 500px; /* Altura suficiente para o conteúdo */
+    padding: 0.5rem 1rem 1rem;
+    border-top: 1px solid var(--color-border);
+}
+
+
+.templateItem {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+}
+.templateItem:hover {
+    background-color: var(--color-bg-secondary);
+}
+.templateItem input {
+   display: none;
+}
+.templateItem label {
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.checkboxVisual {
+    width: 18px;
+    height: 18px;
+    border-radius: var(--border-radius-small);
+    border: 2px solid var(--color-border-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.templateItem input:checked + .checkboxVisual {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+
+.modalFooter {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+}
+

@@ -1,0 +1,86 @@
+/* Estilos para o Painel de Filtros */
+
+.panelHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.panelHeader h3 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.panelBody {
+    padding: 1.5rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.filterSection h4 {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.filterOptions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filterCheckbox {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: var(--border-radius-medium);
+}
+.filterCheckbox:hover {
+    background-color: var(--color-bg-secondary);
+}
+
+.filterCheckbox input {
+    display: none; /* Esconde o checkbox nativo */
+}
+
+.checkboxVisual {
+    width: 18px;
+    height: 18px;
+    border-radius: var(--border-radius-small);
+    border: 2px solid var(--color-border-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white; /* Cor do ícone de check */
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.filterCheckbox input:checked + .checkboxVisual {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.tagColorDot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.panelFooter {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    border-top: 1px solid var(--color-border);
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
