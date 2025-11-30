@@ -3,6 +3,7 @@ import React, { useState, useMemo } from 'react';
 import { useTasks } from '../context/TasksContext';
 import { useUI } from '../context/UIContext';
 import { TaskModal } from '../components/modals/TaskModal';
+import { MorningReviewModal } from '../components/modals/MorningReviewModal';
 import { Icon } from '../components/Icon';
 import { icons } from '../components/Icons';
 import type { Task } from '../types';
@@ -18,25 +19,24 @@ const getGreeting = () => {
 };
 
 export const DashboardScreen: React.FC = () => {
-    const { tasks, frogTaskId, handleCompleteTask, handleAddTask, handleUnsetFrog, handleToggleLeavingHomeItem, leavingHomeItems, handleAddLeavingHomeItem, handleRemoveLeavingHomeItem, handleResetLeavingHomeItems } = useTasks();
-    const { handleNavigate, addNotification, setIsMorningReviewOpen } = useUI();
+    const { tasks, frogTaskId, setFrogTaskId, handleCompleteTask, handleAddTask, handleUnsetFrog, handleToggleLeavingHomeItem, leavingHomeItems, handleAddLeavingHomeItem, handleRemoveLeavingHomeItem, handleResetLeavingHomeItems } = useTasks();
+    const { handleNavigate, addNotification } = useUI();
     const [editingTask, setEditingTask] = useState<Partial<Task> | null>(null);
     const [brainDumpText, setBrainDumpText] = useState('');
+    const [isMorningReviewOpen, setIsMorningReviewOpen] = useState(false);
+    
+    const [selectedFrogId, setSelectedFrogId] = useState<string | null>(null);
 
     const greeting = getGreeting();
     const frogTask = useMemo(() => tasks.find(t => t.id === frogTaskId && t.status !== 'done'), [tasks, frogTaskId]);
+    const eligibleFrogTasks = useMemo(() => tasks.filter(t => t.status !== 'done'), [tasks]);
 
     const handleBrainDumpSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (brainDumpText.trim()) {
-            handleAddTask({
-                title: brainDumpText,
-                quadrant: 'inbox',
-                pomodoroEstimate: 1,
-                energyNeeded: 'medium'
-            });
+            handleAddTask({ title: brainDumpText, quadrant: 'inbox', pomodoroEstimate: 1, energyNeeded: 'medium' });
             setBrainDumpText('');
-            addNotification('Enviado para Caixa de Entrada!', '📥');
+            addNotification('Enviado para Caixa de Entrada!', '📥', 'info');
         }
     };
     
@@ -48,9 +48,27 @@ export const DashboardScreen: React.FC = () => {
         handleNavigate('focus');
     };
 
+    const handleConfirmFrog = () => {
+        if (selectedFrogId) {
+            setFrogTaskId(selectedFrogId);
+            addNotification('Sapo do Dia definido!', '🐸', 'success');
+            setIsMorningReviewOpen(false);
+            setSelectedFrogId(null);
+        }
+    };
+
     return (
         <main>
             {editingTask && <TaskModal taskToEdit={editingTask} onClose={() => setEditingTask(null)} />}
+            
+            <MorningReviewModal 
+                isOpen={isMorningReviewOpen} 
+                onClose={() => setIsMorningReviewOpen(false)}
+                tasks={eligibleFrogTasks}       
+                selectedTask={selectedFrogId}   
+                onSelectTask={setSelectedFrogId}  
+                onConfirm={handleConfirmFrog}   
+            />
             
             <div className={styles.dashboardHeader} style={{ background: greeting.gradient }}>
                 <div className={styles.greetingContent}>

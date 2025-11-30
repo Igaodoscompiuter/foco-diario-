@@ -159,12 +159,12 @@ export const PomodoroProvider: React.FC<{ children: ReactNode }> = ({ children }
         if (prevMode === 'focus') {
             setPomodorosCompleted(p => p + 1);
             setPontosFoco(p => p + 25);
-            addNotification(`Sessão de Foco concluída!${completedTaskTitle}`, '🏆');
+            addNotification(`Sessão de Foco concluída!${completedTaskTitle}`, '🏆', 'victory');
             setDistractionNotes('');
             setActiveTaskId(null);
             setActiveTaskTitle(null);
         } else {
-            addNotification('Pausa concluída! Hora de focar.', '💪');
+            addNotification('Pausa concluída! Hora de focar.', '💪', 'success');
         }
         playSound('end');
         stopBackgroundSound(true);
@@ -257,7 +257,7 @@ export const PomodoroProvider: React.FC<{ children: ReactNode }> = ({ children }
         postCommandToSW('STOP_TIMER');
         setActiveTaskId(taskId);
         setActiveTaskTitle(taskTitle);
-        addNotification(`Focando em: ${taskTitle}`, '🎯');
+        addNotification(`Focando em: ${taskTitle}`, '🎯', 'success');
         setStatus('running');
         setTimerMode('focus');
         const ctx = getAudioContext();

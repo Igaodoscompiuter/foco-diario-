@@ -3,6 +3,7 @@ import type { Task } from '../../types';
 import styles from './MorningReviewModal.module.css';
 
 interface MorningReviewModalProps {
+  isOpen: boolean; // ADICIONADO: Prop para controlar a visibilidade
   tasks?: Task[];
   selectedTask: string | null; 
   onSelectTask: (taskId: string) => void; 
@@ -11,13 +12,21 @@ interface MorningReviewModalProps {
 }
 
 export const MorningReviewModal: React.FC<MorningReviewModalProps> = ({ 
+  isOpen, // ADICIONADO
   tasks = [],
   selectedTask,
   onSelectTask,
   onConfirm,
   onClose
 }) => {
+
+  // ADICIONADO: Lógica para não renderizar o modal se ele não estiver aberto
+  if (!isOpen) {
+    return null;
+  }
+
   return (
+    // O overlay agora chama onClose para fechar o modal ao clicar fora
     <div className="g-modal-overlay" onClick={onClose}> 
       <div className="g-modal" onClick={(e) => e.stopPropagation()}> 
         

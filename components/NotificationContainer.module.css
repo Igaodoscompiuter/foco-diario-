@@ -1,0 +1,52 @@
+/* Container principal que fixa as notificações no topo da tela */
+.notificationContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none; 
+}
+
+/* O "Palco" da Notificação (A SOLUÇÃO DEFINITIVA) */
+.toastListContainer {
+    /* 1. Define o contexto de posicionamento */
+    position: relative;
+    /* 2. Ocupa a largura para centralizar o filho absoluto */
+    width: 100%;
+    /* 3. Garante a altura fixa para que nunca colapse */
+    min-height: 84px; /* Altura generosa para caber a notificação + margens */
+    /* 4. Permite que as notificações sejam clicáveis */
+    pointer-events: auto; 
+}
+
+/* Botão "Limpar Tudo" */
+.clearButton {
+    background-color: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 6px 14px;
+    /* A margem agora é em relação ao palco estável, então não vai mais pular */
+    margin-top: 8px;
+    font-size: 0.8em;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    pointer-events: auto;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.clearButton:hover,
+.clearButton:focus {
+    background-color: rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px); 
+    outline: none;
+}

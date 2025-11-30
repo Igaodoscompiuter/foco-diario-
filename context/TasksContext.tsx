@@ -119,14 +119,14 @@ export const TasksProvider: React.FC<{ children: ReactNode }> = ({ children }) =
             };
             return [...prevTasks, newTask];
         });
-        addNotification('Tarefa adicionada!', '✅');
-    }, [setTasks, addNotification]);
+        // A notificação de adição será tratada na UI para mais contexto
+    }, [setTasks]);
 
     const handleUpdateTask = useCallback((updatedTask: Task) => {
         setTasks(prevTasks => {
             return prevTasks.map(task => task.id === updatedTask.id ? updatedTask : task);
         });
-        addNotification('Tarefa atualizada!', '✏️');
+        addNotification('Tarefa atualizada!', '✏️', 'success');
     }, [setTasks, addNotification]);
 
     const handleUpdateTaskQuadrant = useCallback((taskId: string, newQuadrant: Quadrant, newIndex: number) => {
@@ -159,10 +159,9 @@ export const TasksProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
     const handleDeleteTask = useCallback((taskId: string) => {
         setTasks(prev => prev.filter(t => t.id !== taskId));
-        addNotification('Tarefa excluída!', '🗑️');
+        addNotification('Tarefa excluída!', '🗑️', 'info');
     }, [setTasks, addNotification]);
 
-    // --- LÓGICA DE CONCLUSÃO RESTAURADA ---
     const handleCompleteTask = useCallback((taskId: string, subtaskId?: string) => {
         setTasks(prev => prev.map(task => {
             if (task.id === taskId) {
@@ -185,7 +184,7 @@ export const TasksProvider: React.FC<{ children: ReactNode }> = ({ children }) =
                     
                     if (allSubtasksDone && updatedSubtasks.length > 0) {
                         if(task.status !== 'done') {
-                            addNotification('Todas as subtarefas concluídas!', '🎉');
+                            addNotification('Todas as subtarefas concluídas!', '🎉', 'victory');
                             setPontosFoco(p => p + 10);
                         }
                         newStatus = 'done';
@@ -200,10 +199,10 @@ export const TasksProvider: React.FC<{ children: ReactNode }> = ({ children }) =
                 const newStatus = task.status === 'done' ? 'todo' : 'done';
                 if (newStatus === 'done') {
                     if (taskId === frogTaskId) {
-                        addNotification('Você engoliu o sapo! Conquista épica!', '🐸👑');
+                        addNotification('Você engoliu o sapo! Conquista épica!', '🐸👑', 'victory');
                         setPontosFoco(p => p + 25); 
                     } else {
-                        addNotification('Tarefa concluída!', '🎉');
+                        addNotification('Tarefa concluída!', '🎉', 'victory');
                         setPontosFoco(p => p + 10);
                     }
                 }
@@ -242,7 +241,7 @@ export const TasksProvider: React.FC<{ children: ReactNode }> = ({ children }) =
             }
             return task;
         }));
-        addNotification(`Tarefa adiada por ${days} dia(s)!`, '🗓️');
+        addNotification(`Tarefa adiada por ${days} dia(s)!`, '🗓️', 'info');
     }, [setTasks, addNotification]);
 
     const handleCreateTemplateFromTask = useCallback((task: Task) => {
@@ -258,7 +257,7 @@ export const TasksProvider: React.FC<{ children: ReactNode }> = ({ children }) =
             subtasks: task.subtasks?.map(st => ({ text: st.text })),
         };
         setTaskTemplates(prev => [...prev, newTemplate]);
-        addNotification("Modelo salvo na biblioteca!", '📚');
+        addNotification("Modelo salvo na biblioteca!", '📚', 'info');
     }, [setTaskTemplates, addNotification]);
     
     const handleAddLeavingHomeItem = (text: string) => {
@@ -285,12 +284,12 @@ export const TasksProvider: React.FC<{ children: ReactNode }> = ({ children }) =
             handleUpdateTask({ ...task, dueDate: todayString });
         }
     };
+
     const handleUnsetFrog = useCallback(() => {
-        if (window.confirm("Tem certeza de que deseja desmarcar este sapo?")) {
-            setFrogTaskId(null);
-            addNotification("Sapo desmarcado.", "🐸");
-        }
+        setFrogTaskId(null);
+        addNotification("Sapo desmarcado.", "🐸", 'info');
     }, [setFrogTaskId, addNotification]);
+
     const handleReviewAction = (action: 'complete' | 'postpone' | 'remove_date', taskId: string) => {
         setOverdueTasksForReview(prev => prev.filter(t => t.id !== taskId));
         switch (action) {

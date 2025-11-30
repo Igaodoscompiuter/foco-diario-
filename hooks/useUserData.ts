@@ -16,10 +16,10 @@ export const useUserData = () => {
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-            addNotification('Dados exportados com sucesso!', 'success');
+            addNotification('Dados exportados com sucesso!', '📤', 'success');
         } catch (error) {
             console.error("Falha ao exportar dados:", error);
-            addNotification('Ocorreu um erro ao exportar os dados.', 'error');
+            addNotification('Ocorreu um erro ao exportar os dados.', '❌', 'error');
         }
     };
 
@@ -31,31 +31,30 @@ export const useUserData = () => {
                 if (typeof data !== 'object' || data === null) throw new Error('Formato inválido');
                 
                 Object.keys(data).forEach(key => {
-                    // Validação básica para segurança
                     if (typeof key === 'string' && typeof data[key] === 'string') {
                          localStorage.setItem(key, data[key]);
                     }
                 });
-                addNotification('Dados importados com sucesso! Reiniciando...', 'success');
+                addNotification('Dados importados! Reiniciando...', '📥', 'success');
                 setTimeout(() => window.location.reload(), 1500);
             } catch (error) {
                 console.error("Falha ao importar dados:", error);
-                addNotification('Arquivo de backup inválido ou corrompido.', 'error');
+                addNotification('Arquivo de backup inválido.', '📄', 'error');
             }
         };
         reader.readAsText(file);
     };
 
     const resetData = () => {
-        if (window.confirm('Você tem certeza que deseja apagar TODOS os seus dados? Esta ação não pode ser desfeita.')) {
-            try {
-                localStorage.clear();
-                addNotification('Dados apagados. Reiniciando...', 'info');
-                setTimeout(() => window.location.reload(), 1000);
-            } catch (error) {
-                console.error("Falha ao resetar dados:", error);
-                addNotification('Ocorreu um erro ao apagar os dados.', 'error');
-            }
+        // A confirmação (ex: window.confirm) deve ser movida para a UI que chama esta função.
+        // Isso torna o hook mais reutilizável e o fluxo de usuário mais controlado.
+        try {
+            localStorage.clear();
+            addNotification('Dados apagados. Reiniciando...', '🗑️', 'info');
+            setTimeout(() => window.location.reload(), 1000);
+        } catch (error) {
+            console.error("Falha ao resetar dados:", error);
+            addNotification('Ocorreu um erro ao apagar os dados.', '❌', 'error');
         }
     };
 

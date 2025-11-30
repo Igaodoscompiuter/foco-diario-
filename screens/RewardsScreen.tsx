@@ -4,7 +4,7 @@ import { Icon } from '../components/Icon';
 import { icons } from '../components/Icons';
 import { useTheme } from '../context/ThemeContext';
 import { useUI } from '../context/UIContext';
-import { useUserData } from '../hooks/useUserData'; // Importando nosso novo hook
+import { useUserData } from '../hooks/useUserData';
 import styles from './RewardsScreen.module.css';
 
 interface ShopItem { id: string; type: 'theme' | 'sound'; name: string; description: string; cost: number; previewColor?: string; icon?: keyof typeof icons; }
@@ -21,7 +21,7 @@ const shopCatalog: ShopItem[] = [
 export const RewardsScreen: React.FC = () => {
     const { activeThemeId, setActiveThemeId, activeSoundId, setActiveSoundId, pontosFoco, setPontosFoco, unlockedRewards, setUnlockedRewards } = useTheme();
     const { density, setDensity, addNotification, soundEnabled, setSoundEnabled, hapticsEnabled, setHapticsEnabled, setDevModeEnabled } = useUI();
-    const { exportData, importData, resetData } = useUserData(); // Usando a caixa de ferramentas!
+    const { exportData, importData, resetData } = useUserData();
     
     const [activeTab, setActiveTab] = useState<'shop' | 'settings'>('shop');
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -35,7 +35,7 @@ export const RewardsScreen: React.FC = () => {
         setDevTapCount(newCount);
         if (newCount >= 7) {
             setDevModeEnabled(true);
-            addNotification('Modo de Desenvolvedor Ativado!', ' MODO DESENVOLVEDOR ');
+            addNotification('Modo de Desenvolvedor Ativado!', '👾', 'info');
             setDevTapCount(0);
         } else {
             tapTimeoutRef.current = setTimeout(() => setDevTapCount(0), 1500);
@@ -46,16 +46,16 @@ export const RewardsScreen: React.FC = () => {
         if (pontosFoco >= item.cost) {
             setPontosFoco(pontosFoco - item.cost);
             setUnlockedRewards([...unlockedRewards, item.id]);
-            addNotification(`Item '${item.name}' comprado!`, 'success');
+            addNotification(`Item '${item.name}' comprado!`, '🛍️', 'victory');
         } else {
-            addNotification('Pontos de Foco insuficientes!', 'error');
+            addNotification('Pontos de Foco insuficientes!', '🪙', 'error');
         }
     };
 
     const handleEquip = (item: ShopItem) => {
         if (item.type === 'theme') setActiveThemeId(item.id);
         if (item.type === 'sound') setActiveSoundId(item.id);
-        addNotification(`'${item.name}' equipado!`, 'info');
+        addNotification(`'${item.name}' equipado!`, '🎨', 'success');
     };
     
     const handleImportClick = () => fileInputRef.current?.click();

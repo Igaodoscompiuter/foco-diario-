@@ -1,0 +1,91 @@
+/* Estilização da Aura com efeito Glassmorphism */
+.aura {
+    /* --- LAYOUT VERTICAL --- */
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+    justify-content: center;
+
+    /* --- POSICIONAMENTO ABSOLUTO (DENTRO DO PALCO) --- */
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%); /* Centralização base */
+
+    /* --- ESTILO E DIMENSÕES --- */
+    width: auto;
+    max-width: 90%;
+    padding: 12px 20px;
+    border-radius: 20px;
+    text-align: center; 
+
+    /* --- EFEITO VIDRO E SOMBRA --- */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+
+    /* --- TIPOGRAFIA E OTIMIZAÇÃO --- */
+    color: #ffffff;
+    font-weight: 500;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    will-change: transform, opacity;
+}
+
+.icon {
+    font-size: 1.4em; /* Ícone reduzido */
+    margin-bottom: 8px; 
+    display: flex;
+    align-items: center;
+}
+
+.message {
+    font-size: 0.85em; /* Fonte do texto reduzida ainda mais */
+    line-height: 1.4;
+}
+
+/* --- CATEGORIAS --- */
+
+.aura--success {
+    background-color: rgba(46, 125, 50, 0.45);
+}
+
+.aura--info {
+    background-color: rgba(25, 118, 210, 0.45);
+}
+
+.aura--error {
+    background-color: rgba(211, 47, 47, 0.45);
+}
+
+.aura--victory {
+    background: linear-gradient(45deg, rgba(255, 193, 7, 0.45), rgba(245, 124, 0, 0.45));
+    padding-top: 8px;    /* Padding vertical reduzido */
+    padding-bottom: 8px; /* Padding vertical reduzido */
+}
+
+.aura--victory .icon {
+    font-size: 2.2em;
+    margin-right: 0;
+    margin-bottom: 8px;
+    /* A animação agora inclui o translateX para manter a centralização */
+    animation: victory-pop 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.aura--victory .message {
+    font-size: 1.2em;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* CORREÇÃO: Garante que a notificação permaneça centralizada durante a animação */
+@keyframes victory-pop {
+    0% {
+        transform: translateX(-50%) scale(0.6);
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+    }
+}
